@@ -9,8 +9,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <!-- Monetag Ads -->
     <script src='https://libtl.com/sdk.js' data-zone='9955574' data-sdk='show_9955574'></script>
-    <!-- GigaPub Ads -->
-    <script src="https://ad.gigapub.tech/script?id=6234"></script>
     <style>
         :root{--bg:#0a0618;--card:#1a1233;--accent:#e94560;--gold:#fbbf24;--success:#10b981;--text:#fff;--text2:#a0a0b8;--bottom:72px;--header:60px}
         *{margin:0;padding:0;box-sizing:border-box}
@@ -88,10 +86,9 @@
         .ql-premium-card{background:linear-gradient(145deg,#1a1233,#0d0b1f);border-radius:16px;padding:14px;margin-bottom:8px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 8px 20px rgba(0,0,0,0.15);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:12px}.ql-premium-card:active{transform:scale(0.98);border-color:rgba(251,191,36,0.3)}.ql-premium-icon-wrap{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background:linear-gradient(135deg,rgba(124,58,237,0.25),rgba(233,68,96,0.2));overflow:hidden}.ql-premium-icon-wrap img{width:100%;height:100%;object-fit:cover}.ql-premium-info{flex:1}.ql-premium-name{font-size:14px;font-weight:700;color:white}.ql-premium-arrow{font-size:11px;color:var(--gold);font-weight:600;margin-top:2px}
         .transfer-premium-card{background:linear-gradient(145deg,#1a1233,#0d0b1f);border-radius:20px;padding:24px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 15px 35px rgba(0,0,0,0.3);margin-bottom:12px}.transfer-premium-input{width:100%;padding:14px 16px;border-radius:14px;background:rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.1);color:white;font-size:15px;font-family:inherit;text-align:center;transition:all 0.3s;outline:none}.transfer-premium-input:focus{border-color:rgba(251,191,36,0.5);box-shadow:0 0 20px rgba(251,191,36,0.1)}.transfer-premium-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;width:100%;padding:14px;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;border:none;transition:all 0.25s;letter-spacing:0.5px}.transfer-premium-btn.gold{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;box-shadow:0 6px 20px rgba(251,191,36,0.25)}.transfer-premium-btn.gold:active{transform:scale(0.95);box-shadow:0 3px 10px rgba(251,191,36,0.4)}.transfer-premium-btn.blue{background:linear-gradient(135deg,rgba(59,130,246,0.3),rgba(96,165,250,0.2));color:#60a5fa;border:1px solid rgba(59,130,246,0.3)}.transfer-premium-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--text2);text-align:center;margin-bottom:6px}
         .ref-progress-wrap{padding:8px 0}.ref-progress-bar{height:6px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;margin-top:8px}
-        .ad-phase-indicator{font-size:10px;color:var(--text2);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        input[type="text"]:focus,input[type="number"]:focus,select:focus{border-color:rgba(251,191,36,0.4)!important;box-shadow:0 0 0 3px rgba(251,191,36,0.05)}
+        .ad-phase-indicator{font-size:11px;color:var(--gold);margin-bottom:8px;font-weight:600}
         .all-ref-item{background:var(--card);border-radius:14px;padding:12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:10px}.all-ref-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;background:linear-gradient(135deg,#7c3aed,#e94560)}.all-ref-avatar img{width:100%;height:100%;object-fit:cover}.all-ref-info{flex:1}.all-ref-name{font-size:13px;font-weight:600}.all-ref-id{font-size:10px;color:var(--text2)}.all-ref-coins{font-weight:700;color:var(--gold);font-size:13px}
+        input[type="text"]:focus,input[type="number"]:focus,select:focus{border-color:rgba(251,191,36,0.4)!important;box-shadow:0 0 0 3px rgba(251,191,36,0.05)}
         @media(max-width:375px){.earn-coin-inner{width:170px;height:170px}.daily-grid{grid-template-columns:repeat(5,1fr);gap:4px}.daily-box{padding:8px 2px}.swap-card{padding:12px 8px}}
     </style>
 </head>
@@ -116,14 +113,13 @@
 </div>
 <div class="toast" id="toast"></div>
 
-<!-- Ad Overlays -->
-<div class="popup-overlay" id="adWarn"><div class="popup"><div style="font-size:45px;margin-bottom:10px;">⚠️</div><div style="font-size:16px;font-weight:800;color:var(--gold);margin-bottom:8px;">Important Notice</div><div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:12px;">দুটি অ্যাড দেখতে হবে।<br>Monetag + GigaPub</div><button class="btn-pop" onclick="startAdSequence()">ঠিক আছে</button></div></div>
+<!-- 🔧 FIXED: Ad overlay - single ad (Monetag only) -->
+<div class="popup-overlay" id="adWarn"><div class="popup"><div style="font-size:45px;margin-bottom:10px;">⚠️</div><div style="font-size:16px;font-weight:800;color:var(--gold);margin-bottom:8px;">Important Notice</div><div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:12px;">অ্যাডটি দেখতে হবে।</div><button class="btn-pop" onclick="startAd()">ঠিক আছে</button></div></div>
 <div class="popup-overlay" id="adFail"><div class="popup"><div style="font-size:45px;margin-bottom:10px;">❌</div><div style="font-size:16px;font-weight:800;color:var(--gold);margin-bottom:8px;">কয়েন পাবেন না</div><div style="font-size:12px;color:var(--text2);margin-bottom:12px;">আপনি অ্যাড সম্পূর্ণ দেখেননি!</div><button class="btn-pop" onclick="retryAd()">🔄 আবার দেখুন</button><button class="btn-pop sec" onclick="exitAdPenalty()">🚪 বের হন</button></div></div>
 <div class="popup-overlay" id="adOverlay"><div class="popup">
-    <div class="ad-phase-indicator">📢 Phase <span id="adPhaseNum">1</span>/2 - <span id="adPhaseName">Monetag</span></div>
-    <div id="adUnit" style="min-height:120px;"></div>
-    <button class="btn-pop" id="btnAdNext" onclick="nextAdPhase()" style="display:none;">✅ পরবর্তী অ্যাড (GigaPub)</button>
-    <button class="btn-pop" id="btnAdClose" onclick="finishAdSequence()" style="display:none;">✅ অ্যাড শেষ - ক্লেইম</button>
+    <div class="ad-phase-indicator">📢 Please watch the ad</div>
+    <div id="adUnit"></div>
+    <button class="btn-pop" id="btnAdClose" onclick="finishAd()" style="display:none;">✅ অ্যাড শেষ - ক্লেইম</button>
 </div></div>
 
 <div class="popup-overlay" id="visitWarn"><div class="popup"><div style="font-size:45px;margin-bottom:10px;">📢</div><div style="font-size:16px;font-weight:800;color:var(--gold);margin-bottom:8px;">গুরুত্বপূর্ণ নোটিশ</div><div style="font-size:12px;color:var(--text2);margin-bottom:12px;">সাইটে <b>৩০ সেকেন্ড</b> থাকতে হবে।</div><button class="btn-pop" id="btnVisitGo">ঠিক আছে, যান</button></div></div>
@@ -172,10 +168,10 @@
     <!-- WITHDRAW DETAIL -->
     <div class="settings-subpage" id="withdrawDetailPage"><div class="premium-back" onclick="hideWithdrawDetail()"><div class="premium-back-icon">◀</div><span class="premium-back-text">Back</span></div><div id="wdDetailTabs" class="wdetail-tabs" style="display:none;"></div><div id="withdrawDetailContent"></div></div>
 
-    <!-- 🔧 UPDATED: Referral with All Refer option -->
+    <!-- REFERRAL -->
     <div class="settings-subpage" id="referralPage"><div class="premium-back" onclick="hideSettingsSubpage()"><div class="premium-back-icon">◀</div><span class="premium-back-text">Back</span></div><div class="section-title">👥 Referral</div><div class="ref-stats"><div class="ref-stat"><div class="ref-stat-value" id="refTotalInvites">0</div><div class="ref-stat-label">Total Invited</div></div><div class="ref-stat" onclick="showAllReferPage()" style="cursor:pointer;"><div class="ref-stat-value">👥</div><div class="ref-stat-label">All Refer</div></div></div><div class="ref-link-box"><div style="font-weight:600;font-size:13px;">🔗 Your Referral Link</div><div class="ref-link" id="refLinkDisplay">Loading...</div><button class="btn-pop" onclick="copyRefLink()">📋 Copy Link</button></div><div id="refRewardsInSettings"></div></div>
 
-    <!-- 🔧 NEW: All Refer Page -->
+    <!-- ALL REFER PAGE -->
     <div class="settings-subpage" id="allReferPage"><div class="premium-back" onclick="hideAllReferPage()"><div class="premium-back-icon">◀</div><span class="premium-back-text">Back</span></div><div class="section-title">👥 All Referred Users</div><div id="allReferList"></div></div>
 
     <!-- VOUCHER -->
@@ -203,23 +199,25 @@
 const fb={apiKey:"AIzaSyD-gZMFb-cLu1Fcgz3N0QlP0W-IUOe8hYE",authDomain:"tap-tap-dc251.firebaseapp.com",projectId:"tap-tap-dc251",storageBucket:"tap-tap-dc251.firebasestorage.app",messagingSenderId:"226553203717",appId:"1:226553203717:web:4eb6a0154964ad581a606c"};
 firebase.initializeApp(fb);const db=firebase.firestore();const tg=window.Telegram.WebApp;tg.ready();tg.expand();
 
-// 🔧 ADMIN CONFIG - Set your admin Telegram ID here
-const ADMIN_TELEGRAM_ID='1003985281968';
+// 🔧 FIXED: Admin credentials
+const ADMIN_TELEGRAM_ID='8789796366';
 const BOT_TOKEN='8789796366:AAGPClXyVa9Fyj7fWzSGqm1EC0nYXKqlOkM';
 
 let user=null,config={},tokensConfig={},clickCd=false,clickCnt=0,CPC=1,AD_THRESH=30,VISIT_REQ=30,TOTAL_DAYS=90,MAX_TAP_LIMIT=100,TAP_COOLDOWN_MINUTES=10,userTapCount=0,tapCooldownUntil=null,withdrawEnabled=true,withdrawResumeTime=null,adAction=null,adRefData=null,adCallbackData=null,visitTaskData=null,visitSec=0,visitInt=null,dailyPage=0,DAYS_PER_PAGE=30,cdTimer=null,wdTimer=null,swapFromToken='earnify',swapToToken='ton',tokenSelectorTarget='from',transferTargetUser=null,currentWithdrawToken=null,userPaymentMethods={},wdDetailTab='add',notificationRead=false;
-let adPhase=1,adPhase1Done=false,adPhase2Done=false,adPhaseTimeout=null;
+let adTimeout=null;
 
-// 🔧 ADMIN: Send message to admin via Telegram Bot API
+// 🔧 FIXED: Admin notification function
 async function sendAdminMessage(text){
-    if(!ADMIN_TELEGRAM_ID||ADMIN_TELEGRAM_ID==='1003985281968')return;
-    if(!BOT_TOKEN||BOT_TOKEN==='8789796366:AAGPClXyVa9Fyj7fWzSGqm1EC0nYXKqlOkM')return;
+    if(!ADMIN_TELEGRAM_ID||!BOT_TOKEN)return;
     try{
-        await fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage',{
-            method:'POST',headers:{'Content-Type':'application/json'},
+        const url='https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage';
+        const response=await fetch(url,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
             body:JSON.stringify({chat_id:ADMIN_TELEGRAM_ID,text:text,parse_mode:'HTML'})
         });
-    }catch(e){}
+        console.log('Admin message sent:',response.status);
+    }catch(e){console.error('Admin message error:',e);}
 }
 
 function toast(m,e){const t=document.getElementById('toast');t.className='toast'+(e?' err':'');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
@@ -234,42 +232,21 @@ function sortTokens(){return Object.entries(tokensConfig).sort((a,b)=>{const ba=
 async function initUser(){
     if(tg.initDataUnsafe?.user){const uid=tg.initDataUnsafe.user.id.toString();const ref=db.collection('users').doc(uid);const doc=await ref.get();const tgPhoto=tg.initDataUnsafe.user.photo_url||'';
         if(!doc.exists){
-            // 🔧 Check for referrer
-            const startParam=tg.initDataUnsafe.start_param||'';
-            let referrerId=null,referrerBonus=0;
-            if(startParam&&startParam.startsWith('ref_')){
-                referrerId=startParam.replace('ref_','');
-                const refSnap=await db.collection('users').where('referralCode','==',referrerId).get();
-                if(!refSnap.empty){referrerId=refSnap.docs[0].id;referrerBonus=50;}
-            }
+            const startParam=tg.initDataUnsafe.start_param||'';let referrerId=null,referrerBonus=0;
+            if(startParam&&startParam.startsWith('ref_')){referrerId=startParam.replace('ref_','');const refSnap=await db.collection('users').where('referralCode','==',referrerId).get();if(!refSnap.empty){referrerId=refSnap.docs[0].id;referrerBonus=50;}}
             const nu={tgId:uid,firstName:tg.initDataUnsafe.user.first_name,lastName:tg.initDataUnsafe.user.last_name||'',username:tg.initDataUnsafe.user.username||'',photoUrl:tgPhoto,balance:0,totalEarned:0,tonBalance:0,league:'Silver',completedTasks:[],referralCount:0,referralCode:'REF'+Math.random().toString(36).substr(2,6).toUpperCase(),referralClaims:{},dailyStreak:0,dailyClaimedToday:false,lastDailyClaim:null,claimedLeagues:[],vouchersRedeemed:[],voucherCards:{},totalAds:0,todayAds:0,paymentMethods:{},withdrawHistory:[],sentTransfers:[],receivedTransfers:[],tapCount:0,tapCooldownUntil:null,referredBy:referrerId};
             await ref.set(nu);user={...nu,id:uid};
-            // 🔧 Admin: New user join notification
             const now=new Date();
-            let joinMsg='🆕 <b>New User Joined</b>\n\n';
-            joinMsg+='👤 Name: '+(nu.firstName||'User')+'\n';
-            joinMsg+='🆔 User ID: '+uid+'\n';
-            joinMsg+='📅 Date: '+now.toLocaleDateString()+'\n';
-            joinMsg+='⏰ Time: '+now.toLocaleTimeString()+'\n';
-            if(referrerId){
-                joinMsg+='\n🔗 <b>Referral Info:</b>\n';
-                joinMsg+='👤 Referrer ID: '+referrerId+'\n';
-                joinMsg+='💰 Refer Bonus: '+referrerBonus+' coins\n';
-                // Add bonus to referrer
-                const refDoc=await db.collection('users').doc(referrerId).get();
-                if(refDoc.exists){
-                    const rd=refDoc.data();
-                    await db.collection('users').doc(referrerId).update({balance:(rd.balance||0)+referrerBonus,totalEarned:(rd.totalEarned||0)+referrerBonus,referralCount:(rd.referralCount||0)+1});
-                    sendAdminMessage(joinMsg);
-                }
-            }else{sendAdminMessage(joinMsg);}
+            let joinMsg='🆕 <b>New User Joined</b>\n\n👤 Name: '+(nu.firstName||'User')+'\n🆔 User ID: '+uid+'\n📅 Date: '+now.toLocaleDateString()+'\n⏰ Time: '+now.toLocaleTimeString();
+            if(referrerId){joinMsg+='\n\n🔗 <b>Referral Info:</b>\n👤 Referrer ID: '+referrerId+'\n💰 Refer Bonus: '+referrerBonus+' coins';const refDoc=await db.collection('users').doc(referrerId).get();if(refDoc.exists){const rd=refDoc.data();await db.collection('users').doc(referrerId).update({balance:(rd.balance||0)+referrerBonus,totalEarned:(rd.totalEarned||0)+referrerBonus,referralCount:(rd.referralCount||0)+1});}}
+            sendAdminMessage(joinMsg);
         }else{user={...doc.data(),id:uid};if(tgPhoto&&!user.photoUrl){user.photoUrl=tgPhoto;await ref.update({photoUrl:tgPhoto})};if(!user.claimedLeagues)user.claimedLeagues=[];if(!user.referralClaims)user.referralClaims={};if(!user.paymentMethods)user.paymentMethods={};if(!user.withdrawHistory)user.withdrawHistory=[];if(!user.sentTransfers)user.sentTransfers=[];if(!user.receivedTransfers)user.receivedTransfers=[]}
     if(isNewDay(user.lastDailyClaim)){user.dailyClaimedToday=false;await ref.update({dailyClaimedToday:false})}if(isNewDay(user.tapCooldownUntil)){user.tapCount=0;user.tapCooldownUntil=null;await ref.update({tapCount:0,tapCooldownUntil:null})}userTapCount=user.tapCount||0;tapCooldownUntil=user.tapCooldownUntil?new Date(user.tapCooldownUntil):null;userPaymentMethods=user.paymentMethods||{}}else{const uid='browser_'+Date.now();user={id:uid,firstName:'Guest',photoUrl:'',balance:0,totalEarned:0,tonBalance:0,league:'Silver',completedTasks:[],referralCount:0,referralClaims:{},dailyStreak:0,dailyClaimedToday:false,lastDailyClaim:null,claimedLeagues:[],vouchersRedeemed:[],voucherCards:{},totalAds:0,todayAds:0,paymentMethods:{},withdrawHistory:[],sentTransfers:[],receivedTransfers:[],tapCount:0,tapCooldownUntil:null};await db.collection('users').doc(uid).set(user)}updateUI()}
 
 async function loadConfig(){const d=await db.collection('config').doc('app').get();if(d.exists){config=d.data();CPC=config.coinsPerClick||1;AD_THRESH=config.adClickThreshold||30;VISIT_REQ=config.visitRequiredSeconds||30;TOTAL_DAYS=config.totalDays||90;MAX_TAP_LIMIT=config.maxTapLimit||100;TAP_COOLDOWN_MINUTES=config.tapCooldownMinutes||10;withdrawEnabled=config.withdrawEnabled!==false;withdrawResumeTime=config.withdrawResumeTime?new Date(config.withdrawResumeTime):null}else{config={dailyRewards:Array.from({length:90},(_,i)=>20*(Math.floor(i/10)+1)),referralRewards:[],leagues:[],specialTasks:[],vouchers:{},supportItems:[],appName:'Earnify',coinsPerClick:1,adClickThreshold:30,visitRequiredSeconds:30,totalDays:90,maxTapLimit:100,tapCooldownMinutes:10,withdrawEnabled:true,withdrawResumeTime:null,supportEmail:'support@earnify.com',supportTelegram:'https://t.me/earnify',supportFaq:'Tap, tasks, daily check-in, referrals!',miningPhoto:'',botUsername:'',botToken:'',adminNotices:[]};await db.collection('config').doc('app').set(config)}const td=await db.collection('config').doc('tokens').get();if(td.exists){tokensConfig=td.data()}else{tokensConfig={earnify:{name:'EARNIFY',price:0.000005,icon:'⚡',photoLink:'',minWithdraw:100,minRefer:0},ton:{name:'TON',price:1.36,icon:'💎',photoLink:'',minWithdraw:0.01,minRefer:0}};await db.collection('config').doc('tokens').set(tokensConfig)}updateMiningPhoto();updateTapUI();updateWithdrawUI();updateUI()}
 function updateMiningPhoto(){const img=document.getElementById('miningCoinImg');if(img)img.src=config.miningPhoto||'https://i.postimg.cc/qvvyD9hS/IMG-20260430-022718.png'}
 
-// 🔧 FIXED: TAP SYSTEM - Removed cooldown blocking issue
+// TAP SYSTEM
 function isTapCooldown(){if(!tapCooldownUntil)return false;return new Date()<tapCooldownUntil}
 function updateTapUI(){document.getElementById('tapLimitDisplay').textContent=MAX_TAP_LIMIT;document.getElementById('tapCountDisplay').textContent=userTapCount;if(isTapCooldown()){document.getElementById('coinInner').classList.add('cooldown');document.getElementById('earnHint').classList.add('cooldown');document.getElementById('earnHint').textContent='🔒 Cooldown';document.getElementById('cooldownTimer').style.display='block';if(cdTimer)clearInterval(cdTimer);cdTimer=setInterval(()=>{const r=Math.max(0,Math.floor((tapCooldownUntil.getTime()-Date.now())/1000));if(r<=0){clearInterval(cdTimer);cdTimer=null;userTapCount=0;tapCooldownUntil=null;user.tapCount=0;user.tapCooldownUntil=null;if(user.id)db.collection('users').doc(user.id).update({tapCount:0,tapCooldownUntil:null});updateTapUI();return}const m=Math.floor(r/60);const s=r%60;document.getElementById('cooldownTimeDisplay').textContent=m+'m '+s+'s'},1000)}else{document.getElementById('coinInner').classList.remove('cooldown');document.getElementById('earnHint').classList.remove('cooldown');document.getElementById('earnHint').textContent='Tap to Earn';document.getElementById('cooldownTimer').style.display='none';if(cdTimer){clearInterval(cdTimer);cdTimer=null}}}
 async function handleCoinClick(e){if(e){e.preventDefault();e.stopPropagation();}if(isTapCooldown()){toast('⏳ Cooldown!',true);return}clickCnt++;if(clickCnt>=AD_THRESH){clickCnt=0;showAd('earn_ad');return}addBal(CPC);userTapCount++;if(user.id)db.collection('users').doc(user.id).update({tapCount:userTapCount});if(userTapCount>=MAX_TAP_LIMIT){tapCooldownUntil=new Date(Date.now()+TAP_COOLDOWN_MINUTES*60*1000);user.tapCooldownUntil=tapCooldownUntil.toISOString();if(user.id)db.collection('users').doc(user.id).update({tapCooldownUntil:user.tapCooldownUntil,tapCount:userTapCount});toast('🔒 Limit!')}const inner=document.getElementById('coinInner');if(inner&&!isTapCooldown()){inner.style.transform='scale(0.88)';setTimeout(()=>{if(inner)inner.style.transform=''},150)}const wrap=document.getElementById('coinWrap');if(wrap){const pop=document.createElement('div');pop.className='coin-pop';pop.textContent='+'+CPC;wrap.appendChild(pop);setTimeout(()=>pop.remove(),700)}updateTapUI()}
@@ -284,12 +261,9 @@ function openNotifyPage(){notificationRead=true;document.getElementById('notifyD
 function closeNotifyPage(){document.querySelectorAll('.settings-subpage').forEach(x=>x.classList.remove('active'));document.getElementById('settingsMainPage').style.display='block';updateUI()}
 function switchNotifyTab(tab){document.querySelectorAll('.notify-tabs button').forEach(x=>x.classList.remove('active'));document.querySelector('[data-ntab="'+tab+'"]').classList.add('active');document.querySelectorAll('.notify-tab-content').forEach(x=>x.classList.remove('active'));document.getElementById(tab+'Content').classList.add('active');if(tab==='coinTransfers')renderCoinTransfers();if(tab==='wdHistory')renderWdHistory()}
 
-function updateUI(){if(!user)return;const fl=user.firstName?.[0]?.toUpperCase()||'?';const totalUSD=getTotalUSD();const avEl=document.getElementById('userAvatar');if(avEl){if(user.photoUrl)avEl.innerHTML='<img src="'+user.photoUrl+'" alt="av">';else avEl.textContent=fl}document.getElementById('userName').textContent=user.firstName||'User';document.getElementById('balanceDisplay').textContent=(user.balance||0).toLocaleString();const wb=document.getElementById('walletBalance');if(wb)wb.textContent='$'+totalUSD.toFixed(4);const vpAv=document.getElementById('vpAvatar');if(vpAv){if(user.photoUrl)vpAv.innerHTML='<img src="'+user.photoUrl+'" alt="av">';else vpAv.textContent=fl}document.getElementById('vpName').textContent=user.firstName||'User';document.getElementById('vpTgId').textContent=user.tgId||user.id;document.getElementById('vpTotalUSD').textContent='$'+totalUSD.toFixed(4);document.getElementById('vpEarnify').textContent=(user.balance||0).toLocaleString();document.getElementById('vpTonBalance').textContent=(user.tonBalance||0).toFixed(6);document.getElementById('vpEarned').textContent=(user.totalEarned||0).toLocaleString();document.getElementById('vpRefs').textContent=(user.referralCount||0).toLocaleString();document.getElementById('vpAds').textContent=(user.totalAds||0).toLocaleString();document.getElementById('refTotalInvites').textContent=(user.referralCount||0).toLocaleString();document.getElementById('refLinkDisplay').textContent='https://t.me/earnify_bot?start='+(user.referralCode||'REF');document.getElementById('supportEmailDisplay').textContent=config.supportEmail||'support@earnify.com';document.getElementById('supportTelegramBtn').dataset.link=config.supportTelegram||'https://t.me/earnify';document.getElementById('supportFaqDisplay').textContent=config.supportFaq||'Tap, tasks, daily check-in, referrals!';renderSupportItems();renderWalletTokens();renderWithdrawTokenList();renderWithdrawHistory();document.getElementById('dailyStreakDays').textContent=user.dailyStreak||0;renderTasks();renderLeagues();renderRefs();renderRefInSettings();renderDaily();renderAllVouchers();renderLB();checkNotifications()}
+function updateUI(){if(!user)return;const fl=user.firstName?.[0]?.toUpperCase()||'?';const totalUSD=getTotalUSD();const avEl=document.getElementById('userAvatar');if(avEl){if(user.photoUrl)avEl.innerHTML='<img src="'+user.photoUrl+'" alt="av">';else avEl.textContent=fl}document.getElementById('userName').textContent=user.firstName||'User';document.getElementById('balanceDisplay').textContent=(user.balance||0).toLocaleString();const wb=document.getElementById('walletBalance');if(wb)wb.textContent='$'+totalUSD.toFixed(4);const vpAv=document.getElementById('vpAvatar');if(vpAv){if(user.photoUrl)vpAv.innerHTML='<img src="'+user.photoUrl+'" alt="av">';else vpAv.textContent=fl}document.getElementById('vpName').textContent=user.firstName||'User';document.getElementById('vpTgId').textContent=user.tgId||user.id;document.getElementById('vpTotalUSD').textContent='$'+totalUSD.toFixed(4);document.getElementById('vpEarnify').textContent=(user.balance||0).toLocaleString();document.getElementById('vpTonBalance').textContent=(user.tonBalance||0).toFixed(6);document.getElementById('vpEarned').textContent=(user.totalEarned||0).toLocaleString();document.getElementById('vpRefs').textContent=(user.referralCount||0).toLocaleString();document.getElementById('vpAds').textContent=(user.totalAds||0).toLocaleString();document.getElementById('refTotalInvites').textContent=(user.referralCount||0).toLocaleString();document.getElementById('refLinkDisplay').textContent='https://t.me/earnify_11_bot?start=ref_'+(user.referralCode||'REF');document.getElementById('supportEmailDisplay').textContent=config.supportEmail||'support@earnify.com';document.getElementById('supportTelegramBtn').dataset.link=config.supportTelegram||'https://t.me/earnify';document.getElementById('supportFaqDisplay').textContent=config.supportFaq||'Tap, tasks, daily check-in, referrals!';renderSupportItems();renderWalletTokens();renderWithdrawTokenList();renderWithdrawHistory();document.getElementById('dailyStreakDays').textContent=user.dailyStreak||0;renderTasks();renderLeagues();renderRefs();renderRefInSettings();renderDaily();renderAllVouchers();renderLB();checkNotifications()}
 function renderSupportItems(){const c=document.getElementById('supportItemsContainer');if(!c)return;const items=config.supportItems||[];c.innerHTML=items.length?'<div class="section-title" style="margin-top:14px;">📋 Quick Links</div>'+items.map(i=>'<div class="ql-premium-card" onclick="window.open(\''+i.link+'\',\'_blank\')"><div class="ql-premium-icon-wrap">'+(i.photoLink?'<img src="'+i.photoLink+'" alt="'+i.name+'">':'<span style="font-size:22px;">🔗</span>')+'</div><div class="ql-premium-info"><div class="ql-premium-name">'+i.name+'</div><div class="ql-premium-arrow">Open Link →</div></div></div>').join(''):''}
-
-// 🔧 FIXED: Wallet tokens show USD value
 function renderWalletTokens(){const c=document.getElementById('walletTokenList');if(!c)return;const sorted=sortTokens();c.innerHTML=sorted.map(([k,tok])=>{const bal=getTokenBalance(k);const usdVal=formatUSD(bal,tok.price||0);const iconHtml=tok.photoLink?'<img src="'+tok.photoLink+'" alt="'+tok.name+'">':(tok.icon||'🪙');return'<div class="wallet-token-item"><div class="wallet-token-icon">'+iconHtml+'</div><div class="wallet-token-info"><div class="wallet-token-name">'+tok.name+'</div><div class="wallet-token-symbol">$'+(tok.price||0).toFixed(8)+' | Value: <b style="color:var(--gold);">$'+usdVal+'</b></div></div><div class="wallet-token-balance"><div class="wallet-token-amount">'+(typeof bal==='number'&&bal<0.01?bal.toFixed(6):bal.toLocaleString())+'</div></div></div>'}).join('')||'<p style="color:var(--text2);">No tokens.</p>'}
-
 function renderNotifyData(){renderAdminNotices();renderCoinTransfers();renderWdHistory()}
 function renderAdminNotices(){const c=document.getElementById('adminNoticeList');if(!c)return;const notices=config.adminNotices||[];c.innerHTML=notices.length?notices.map(n=>'<div class="notice-card"><div class="notice-title">📢 '+n.title+'</div><div class="notice-msg">'+n.message+'</div><div class="notice-date">'+new Date(n.createdAt).toLocaleString()+'</div></div>').join(''):'<p style="color:var(--text2);text-align:center;padding:16px;">No notices yet.</p>'}
 function renderCoinTransfers(){const c=document.getElementById('coinTransferList');if(!c)return;const sent=(user.sentTransfers||[]).map(t=>({...t,direction:'sent'}));const received=(user.receivedTransfers||[]).map(t=>({...t,direction:'receive'}));const all=[...sent,...received].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));c.innerHTML=all.length?all.slice(0,30).map(t=>{const av=t.photoUrl?'<img src="'+t.photoUrl+'" alt="av">':(t.userName||'?')[0];const cls=t.direction==='receive'?'receive':'sent';return'<div class="history-item"><div class="history-avatar">'+av+'</div><div class="history-info"><div class="history-name">'+t.userName+'</div><div class="history-meta">ID: '+t.userId+' | '+new Date(t.createdAt).toLocaleString()+'</div></div><div class="history-amount"><div class="history-coins '+cls+'">'+(t.direction==='receive'?'+':'')+t.amount+'</div><div style="font-size:9px;color:var(--text2);">'+t.direction.toUpperCase()+'</div></div></div>'}).join(''):'<p style="color:var(--text2);text-align:center;padding:16px;">No transfers yet.</p>'}
@@ -310,13 +284,7 @@ async function editWdMethod(tokenKey,mKey){const m=userPaymentMethods[tokenKey]?
 async function saveEditWdMethod(tokenKey,mKey){const name=document.getElementById('ewdName').value.trim();const address=document.getElementById('ewdAddr').value.trim();const memo=document.getElementById('ewdMemo').value.trim()||'';if(!name||!address)return;userPaymentMethods[tokenKey][mKey]={name,address,memo};user.paymentMethods=userPaymentMethods;await db.collection('users').doc(user.id).update({paymentMethods:userPaymentMethods});toast('✅ Updated!');switchWdDetailTab('existing')}
 async function deleteWdMethod(tokenKey,mKey){if(!confirm('Delete?'))return;delete userPaymentMethods[tokenKey][mKey];user.paymentMethods=userPaymentMethods;await db.collection('users').doc(user.id).update({paymentMethods:userPaymentMethods});toast('🗑 Deleted!');switchWdDetailTab('existing')}
 function setMaxWithdraw(tokenKey){const bal=getTokenBalance(tokenKey);const input=document.getElementById('withdrawAmountInput');if(input)input.value=typeof bal==='number'&&bal<0.01?bal.toFixed(6):bal}
-
-// 🔧 UPDATED: Withdraw with admin notification
-async function submitWithdrawRequest(tokenKey){const methodKey=document.getElementById('wdSelectMethod')?.value;const amt=parseFloat(document.getElementById('withdrawAmountInput')?.value)||0;const bal=getTokenBalance(tokenKey);const tok=tokensConfig[tokenKey];if(!methodKey){toast('Select method!',true);return}if(amt<(tok?.minWithdraw||0)){toast('Min: '+tok.minWithdraw,true);return}if(amt>bal){toast('Insufficient!',true);return}const method=userPaymentMethods[tokenKey]?.[methodKey];if(!method)return;if(tokenKey==='earnify')user.balance-=amt;else if(tokenKey==='ton')user.tonBalance-=amt;else user['token_'+tokenKey]=(user['token_'+tokenKey]||0)-amt;const now=new Date();const req={id:'wd_'+Date.now(),tokenKey,tokenName:tok.name,amount:amt,method,status:'pending',createdAt:now.toISOString(),userId:user.id,userName:user.firstName};await db.collection('withdrawRequests').doc(req.id).set(req);if(!user.withdrawHistory)user.withdrawHistory=[];user.withdrawHistory.unshift(req);const upd={balance:user.balance,tonBalance:user.tonBalance,withdrawHistory:user.withdrawHistory};if(tokenKey!=='earnify'&&tokenKey!=='ton')upd['token_'+tokenKey]=user['token_'+tokenKey];await db.collection('users').doc(user.id).update(upd);
-// 🔧 Admin notification for withdraw
-let wdMsg='💸 <b>Withdraw Request</b>\n\n';wdMsg+='👤 Name: '+(user.firstName||'User')+'\n';wdMsg+='🆔 User ID: '+user.id+'\n';wdMsg+='💎 Token: '+tok.name+' ('+tokenKey+')\n';wdMsg+='💰 Amount: '+amt+' ('+tok.name+')\n';wdMsg+='💲 Token Value: $'+(tok.price||0).toFixed(8)+'\n';wdMsg+='📋 Payment Method: '+method.name+'\n';wdMsg+='📍 Address: '+method.address+(method.memo?' | '+method.memo:'')+'\n';wdMsg+='📅 Date: '+now.toLocaleDateString()+'\n';wdMsg+='⏰ Time: '+now.toLocaleTimeString()+'\n';wdMsg+='📊 Status: <b>PENDING</b>';
-sendAdminMessage(wdMsg);
-toast('✅ Submitted!');hideWithdrawDetail();updateUI()}
+async function submitWithdrawRequest(tokenKey){const methodKey=document.getElementById('wdSelectMethod')?.value;const amt=parseFloat(document.getElementById('withdrawAmountInput')?.value)||0;const bal=getTokenBalance(tokenKey);const tok=tokensConfig[tokenKey];if(!methodKey){toast('Select method!',true);return}if(amt<(tok?.minWithdraw||0)){toast('Min: '+tok.minWithdraw,true);return}if(amt>bal){toast('Insufficient!',true);return}const method=userPaymentMethods[tokenKey]?.[methodKey];if(!method)return;if(tokenKey==='earnify')user.balance-=amt;else if(tokenKey==='ton')user.tonBalance-=amt;else user['token_'+tokenKey]=(user['token_'+tokenKey]||0)-amt;const now=new Date();const req={id:'wd_'+Date.now(),tokenKey,tokenName:tok.name,amount:amt,method,status:'pending',createdAt:now.toISOString(),userId:user.id,userName:user.firstName};await db.collection('withdrawRequests').doc(req.id).set(req);if(!user.withdrawHistory)user.withdrawHistory=[];user.withdrawHistory.unshift(req);const upd={balance:user.balance,tonBalance:user.tonBalance,withdrawHistory:user.withdrawHistory};if(tokenKey!=='earnify'&&tokenKey!=='ton')upd['token_'+tokenKey]=user['token_'+tokenKey];await db.collection('users').doc(user.id).update(upd);let wdMsg='💸 <b>Withdraw Request</b>\n\n👤 Name: '+(user.firstName||'User')+'\n🆔 User ID: '+user.id+'\n💎 Token: '+tok.name+' ('+tokenKey+')\n💰 Amount: '+amt+' '+tok.name+'\n💲 Token Value: $'+(tok.price||0).toFixed(8)+'\n📋 Method: '+method.name+'\n📍 Address: '+method.address+(method.memo?' | '+method.memo:'')+'\n📅 Date: '+now.toLocaleDateString()+'\n⏰ Time: '+now.toLocaleTimeString()+'\n📊 Status: <b>PENDING</b>';sendAdminMessage(wdMsg);toast('✅ Submitted!');hideWithdrawDetail();updateUI()}
 
 // SWAP
 function openSwapPage(){document.getElementById('settingsMainPage').style.display='none';document.querySelectorAll('.settings-subpage').forEach(x=>x.classList.remove('active'));document.getElementById('swapPage').classList.add('active');updateSwapUI()}
@@ -325,13 +293,7 @@ function updateSwapUI(){const fromTok=tokensConfig[swapFromToken]||{name:swapFro
 function toggleSwapDirection(){const t=swapFromToken;swapFromToken=swapToToken;swapToToken=t;document.getElementById('swapAmountInput').value='';updateSwapUI()}
 function onSwapInputChange(){const amt=parseFloat(document.getElementById('swapAmountInput').value)||0;const fromTok=tokensConfig[swapFromToken]||{price:0};const toTok=tokensConfig[swapToToken]||{price:0};document.getElementById('swapReceiveAmount').textContent=(amt*((fromTok.price||0)/(toTok.price||1))).toFixed(8)}
 function setMaxSwap(){const bal=getTokenBalance(swapFromToken);document.getElementById('swapAmountInput').value=typeof bal==='number'&&bal<0.01?bal.toFixed(6):bal;onSwapInputChange()}
-
-// 🔧 UPDATED: Swap with admin notification
-async function executeSwap(){const amt=parseFloat(document.getElementById('swapAmountInput').value)||0;if(amt<=0){toast('Enter amount!',true);return}const fromBal=getTokenBalance(swapFromToken);if(amt>fromBal){toast('Insufficient!',true);return}const fromTok=tokensConfig[swapFromToken]||{price:0};const toTok=tokensConfig[swapToToken]||{price:0};const result=amt*((fromTok.price||0)/(toTok.price||1));if(swapFromToken==='earnify')user.balance-=amt;else if(swapFromToken==='ton')user.tonBalance-=amt;else user['token_'+swapFromToken]=(user['token_'+swapFromToken]||0)-amt;if(swapToToken==='earnify')user.balance+=Math.floor(result);else if(swapToToken==='ton')user.tonBalance+=result;else user['token_'+swapToToken]=(user['token_'+swapToToken]||0)+result;const upd={balance:user.balance,tonBalance:user.tonBalance};if(swapFromToken!=='earnify'&&swapFromToken!=='ton')upd['token_'+swapFromToken]=user['token_'+swapFromToken];if(swapToToken!=='earnify'&&swapToToken!=='ton')upd['token_'+swapToToken]=user['token_'+swapToToken];await db.collection('users').doc(user.id).update(upd);
-// 🔧 Admin notification for swap
-let swMsg='🔄 <b>Coin Swap</b>\n\n';swMsg+='👤 Name: '+(user.firstName||'User')+'\n';swMsg+='🆔 User ID: '+user.id+'\n';swMsg+='📤 From Token: '+fromTok.name+' ('+swapFromToken+')\n';swMsg+='📥 To Token: '+toTok.name+' ('+swapToToken+')\n';swMsg+='💰 Swap Amount: '+amt+' '+fromTok.name+'\n';swMsg+='💱 Received: '+result.toFixed(8)+' '+toTok.name+'\n';
-sendAdminMessage(swMsg);
-toast('✅ Swapped!');document.getElementById('swapAmountInput').value='';updateSwapUI();updateUI()}
+async function executeSwap(){const amt=parseFloat(document.getElementById('swapAmountInput').value)||0;if(amt<=0){toast('Enter amount!',true);return}const fromBal=getTokenBalance(swapFromToken);if(amt>fromBal){toast('Insufficient!',true);return}const fromTok=tokensConfig[swapFromToken]||{price:0};const toTok=tokensConfig[swapToToken]||{price:0};const result=amt*((fromTok.price||0)/(toTok.price||1));if(swapFromToken==='earnify')user.balance-=amt;else if(swapFromToken==='ton')user.tonBalance-=amt;else user['token_'+swapFromToken]=(user['token_'+swapFromToken]||0)-amt;if(swapToToken==='earnify')user.balance+=Math.floor(result);else if(swapToToken==='ton')user.tonBalance+=result;else user['token_'+swapToToken]=(user['token_'+swapToToken]||0)+result;const upd={balance:user.balance,tonBalance:user.tonBalance};if(swapFromToken!=='earnify'&&swapFromToken!=='ton')upd['token_'+swapFromToken]=user['token_'+swapFromToken];if(swapToToken!=='earnify'&&swapToToken!=='ton')upd['token_'+swapToToken]=user['token_'+swapToToken];await db.collection('users').doc(user.id).update(upd);let swMsg='🔄 <b>Coin Swap</b>\n\n👤 Name: '+(user.firstName||'User')+'\n🆔 User ID: '+user.id+'\n📤 From: '+fromTok.name+' ('+swapFromToken+')\n📥 To: '+toTok.name+' ('+swapToToken+')\n💰 Amount: '+amt+' '+fromTok.name+'\n💱 Received: '+result.toFixed(8)+' '+toTok.name;sendAdminMessage(swMsg);toast('✅ Swapped!');document.getElementById('swapAmountInput').value='';updateSwapUI();updateUI()}
 function openTokenSelector(target){tokenSelectorTarget=target;const list=document.getElementById('tokenSelectorList');list.innerHTML=Object.entries(tokensConfig).map(([k,tok])=>{const iconHtml=tok.photoLink?'<img src="'+tok.photoLink+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;">':'<span style="font-size:24px;">'+(tok.icon||'🪙')+'</span>';return'<div class="token-selector-item" onclick="selectSwapToken(\''+target+'\',\''+k+'\')"><div class="token-selector-item-icon">'+iconHtml+'</div><div class="token-selector-item-name">'+tok.name+'</div></div>'}).join('');document.getElementById('tokenSelectorPopup').classList.add('show')}
 function selectSwapToken(target,key){if(target==='from')swapFromToken=key;else swapToToken=key;document.getElementById('tokenSelectorPopup').classList.remove('show');document.getElementById('swapAmountInput').value='';updateSwapUI()}
 function closeTokenSelector(){document.getElementById('tokenSelectorPopup').classList.remove('show')}
@@ -342,13 +304,7 @@ function closeTransferPage(){document.querySelectorAll('.settings-subpage').forE
 async function checkTransferUser(){const searchId=document.getElementById('transferUserIdInput').value.trim();if(!searchId){toast('Enter ID!',true);return}if(searchId===user.id||searchId===(user.tgId||'')){toast('Cannot transfer to yourself!',true);return}try{const targetDoc=await db.collection('users').where('tgId','==',searchId).get();if(!targetDoc.empty){transferTargetUser={id:targetDoc.docs[0].id,...targetDoc.docs[0].data()};showTransferUI()}else{const dd=await db.collection('users').doc(searchId).get();if(dd.exists){transferTargetUser={id:searchId,...dd.data()};showTransferUI()}else{transferTargetUser=null;document.getElementById('transferUserResult').innerHTML='<div class="transfer-premium-card" style="text-align:center;"><div style="font-size:48px;margin-bottom:8px;">❌</div><p style="color:var(--accent);font-size:15px;font-weight:600;">User Not Found</p></div>'}}}catch(e){toast('Error!',true)}}
 function showTransferUI(){if(!transferTargetUser)return;const tu=transferTargetUser;const avHtml=tu.photoUrl?'<img src="'+tu.photoUrl+'" alt="av" style="width:72px;height:72px;border-radius:50%;display:block;margin:0 auto 10px;border:3px solid rgba(251,191,36,0.4);">':'<div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#e94560);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:28px;color:white;margin:0 auto 10px;border:3px solid rgba(251,191,36,0.4);">'+(tu.firstName||'?')[0]+'</div>';const mb=user.balance||0;document.getElementById('transferUserResult').innerHTML='<div class="transfer-premium-card" style="text-align:center;">'+avHtml+'<div style="font-size:20px;font-weight:700;margin-top:10px;">'+(tu.firstName||'User')+'</div><div style="font-size:13px;color:var(--text2);margin-top:4px;">ID: '+(tu.tgId||tu.id)+'</div></div><div class="transfer-premium-card" style="text-align:center;"><div class="transfer-premium-label">Amount (EARNIFY)</div><div style="font-size:12px;color:var(--text2);margin-bottom:14px;">Your Balance: <span style="color:var(--gold);cursor:pointer;font-weight:700;text-decoration:underline;" onclick="setMaxTransfer()">'+mb.toLocaleString()+'</span></div><input type="number" id="transferAmountInput" placeholder="0" class="transfer-premium-input" style="font-size:22px;font-weight:700;margin-bottom:14px;"><button class="transfer-premium-btn gold" onclick="showAd(\'transfer\')">📨 Send Coin to '+(tu.firstName||'User')+'</button></div>'}
 function setMaxTransfer(){const input=document.getElementById('transferAmountInput');if(input)input.value=Math.floor(user.balance||0)}
-
-// 🔧 UPDATED: Transfer with admin notification
-async function executeTransfer(){if(!transferTargetUser)return;const amt=parseInt(document.getElementById('transferAmountInput')?.value)||0;if(amt<=0){toast('Enter amount!',true);return}if(amt>(user.balance||0)){toast('Insufficient!',true);return}user.balance-=amt;await db.collection('users').doc(user.id).update({balance:user.balance});const tr=db.collection('users').doc(transferTargetUser.id);const td=await tr.get();if(td.exists){const d=td.data();await tr.update({balance:(d.balance||0)+amt,totalEarned:(d.totalEarned||0)+amt});const transferRecord={amount:amt,userName:user.firstName,userId:user.id,photoUrl:user.photoUrl||'',direction:'sent',createdAt:new Date().toISOString()};const receiverRecord={amount:amt,userName:user.firstName,userId:user.id,photoUrl:user.photoUrl||'',direction:'receive',createdAt:new Date().toISOString()};if(!user.sentTransfers)user.sentTransfers=[];user.sentTransfers.unshift(transferRecord);await db.collection('users').doc(user.id).update({sentTransfers:user.sentTransfers});const rd=d.receivedTransfers||[];rd.unshift(receiverRecord);await tr.update({receivedTransfers:rd});notificationRead=false;
-// 🔧 Admin notification for transfer
-let trMsg='📨 <b>Coin Transfer</b>\n\n';trMsg+='<b>Sender:</b>\n';trMsg+='👤 Name: '+(user.firstName||'User')+'\n';trMsg+='🆔 Sender ID: '+user.id+'\n';trMsg+='\n<b>Receiver:</b>\n';trMsg+='👤 Name: '+(transferTargetUser.firstName||'User')+'\n';trMsg+='🆔 Receiver ID: '+(transferTargetUser.tgId||transferTargetUser.id)+'\n';trMsg+='\n💎 Token: EARNIFY\n';trMsg+='💰 Amount: '+amt+' EARNIFY\n';
-sendAdminMessage(trMsg);
-}toast('✅ Sent!');transferTargetUser=null;document.getElementById('transferUserIdInput').value='';document.getElementById('transferUserResult').innerHTML='';updateUI()}
+async function executeTransfer(){if(!transferTargetUser)return;const amt=parseInt(document.getElementById('transferAmountInput')?.value)||0;if(amt<=0){toast('Enter amount!',true);return}if(amt>(user.balance||0)){toast('Insufficient!',true);return}user.balance-=amt;await db.collection('users').doc(user.id).update({balance:user.balance});const tr=db.collection('users').doc(transferTargetUser.id);const td=await tr.get();if(td.exists){const d=td.data();await tr.update({balance:(d.balance||0)+amt,totalEarned:(d.totalEarned||0)+amt});const transferRecord={amount:amt,userName:user.firstName,userId:user.id,photoUrl:user.photoUrl||'',direction:'sent',createdAt:new Date().toISOString()};const receiverRecord={amount:amt,userName:user.firstName,userId:user.id,photoUrl:user.photoUrl||'',direction:'receive',createdAt:new Date().toISOString()};if(!user.sentTransfers)user.sentTransfers=[];user.sentTransfers.unshift(transferRecord);await db.collection('users').doc(user.id).update({sentTransfers:user.sentTransfers});const rd=d.receivedTransfers||[];rd.unshift(receiverRecord);await tr.update({receivedTransfers:rd});notificationRead=false;let trMsg='📨 <b>Coin Transfer</b>\n\n<b>Sender:</b>\n👤 '+(user.firstName||'User')+'\n🆔 '+user.id+'\n\n<b>Receiver:</b>\n👤 '+(transferTargetUser.firstName||'User')+'\n🆔 '+(transferTargetUser.tgId||transferTargetUser.id)+'\n\n💎 Token: EARNIFY\n💰 Amount: '+amt+' EARNIFY';sendAdminMessage(trMsg);}toast('✅ Sent!');transferTargetUser=null;document.getElementById('transferUserIdInput').value='';document.getElementById('transferUserResult').innerHTML='';updateUI()}
 
 // LEAGUES & REFS
 function claimLeague(idx){if(!config.leagues||!config.leagues[idx])return;if((user.claimedLeagues||[]).includes(idx)){toast('Claimed!',true);return}if(user.balance<config.leagues[idx].minBalance){toast('Not enough!',true);return}user.claimedLeagues.push(idx);addBal(config.leagues[idx].reward||0);db.collection('users').doc(user.id).update({claimedLeagues:user.claimedLeagues});updateUI()}
@@ -358,10 +314,10 @@ function renderRefs(){const c=document.getElementById('refList');if(!c)return;co
 function renderRefInSettings(){const c=document.getElementById('refRewardsInSettings');if(!c)return;const rc=user.referralCount||0;c.innerHTML=(config.referralRewards||[]).map(r=>{const ok=rc>=r.count;const claimed=(user.referralClaims||{})[r.count];const prog=r.count>0?Math.min(100,Math.floor(rc/r.count*100)):100;let txt='Locked',cls='locked';if(claimed){txt='Claimed';cls='claimed'}else if(ok){txt='Claim';cls=''}return'<div class="card"><div class="card-row"><div class="card-left"><span style="font-size:26px;">👥</span><div><div class="card-name">Invite '+r.count+'</div><div class="card-coins">🪙 '+(r.reward||0).toLocaleString()+'</div></div></div><button class="btn-sm '+cls+'" '+(!ok||claimed?'disabled':'')+' onclick="showAdRef('+r.count+','+(r.reward||0)+')">'+txt+'</button></div><div class="ref-progress-wrap"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text2);margin-bottom:4px;"><span>Progress</span><span>'+rc+'/'+r.count+'</span></div><div class="ref-progress-bar"><div class="progress-bar" style="width:'+prog+'%"></div></div></div></div>'}).join('')||'<p>No rewards.</p>'}
 function renderTasks(){const c=document.getElementById('taskList');if(!c)return;c.innerHTML=(config.specialTasks||[]).map(t=>{const done=user.completedTasks?.includes(t.id);const isV=t.type==='visit';return'<div class="ucard"><div class="ucard-info"><div class="ucard-icon">'+(isV?'👁️':'🔵')+'</div><div><div class="ucard-name">'+t.name+'</div><div class="ucard-sub">'+(t.voucherReward&&t.reward?'💰 '+t.reward+' + 🎟️':(t.voucherReward?'🎟️':'💰 '+(t.reward||0)))+'</div></div></div><button class="btn-sm '+(done?'claimed':isV?'visit':'join')+'" '+(done?'disabled':'')+' onclick="'+(!done?(isV?'startVisitTask(\''+t.id+'\','+(t.reward||0)+',\''+(t.link||'')+'\','+(t.voucherReward||false)+')':'completeTask(\''+t.id+'\','+(t.reward||0)+',\''+(t.link||'')+'\','+(t.voucherReward||false)+')'):'')+'">'+(done?'✅ Done':isV?'Visit':'Join')+'</button></div>'}).join('')||'<p>No tasks.</p>'}
 
-// 🔧 FIXED: Daily check-in
+// 🔧 FIXED: Daily check-in with direct ad → claim flow
 function renderDaily(){const grid=document.getElementById('dailyGrid');if(!grid)return;const rewards=config.dailyRewards||[];const start=dailyPage*DAYS_PER_PAGE,end=Math.min(start+DAYS_PER_PAGE,TOTAL_DAYS);const days=[];for(let i=start;i<end;i++)days.push({day:i+1,reward:rewards[i]||0});document.getElementById('dailyPageInfo').textContent='Days '+(start+1)+'-'+end;document.getElementById('dailyPrevBtn').disabled=dailyPage===0;document.getElementById('dailyNextBtn').disabled=end>=TOTAL_DAYS;grid.innerHTML=days.map(d=>{const isC=d.day<=(user.dailyStreak||0);const isToday=d.day===(user.dailyStreak||0)+1&&!user.dailyClaimedToday;const isV=d.day%7===0;let cls='daily-box';if(isC)cls+=' claimed';else if(isToday)cls+=isV?' voucher-box':' today';else cls+=' locked';return'<div class="'+cls+'" onclick="'+(isToday&&!isC?'showAd(\'daily\','+d.day+')':'')+'">'+(isV&&!isC?'<div class="voucher-badge">V</div>':'')+'<div class="daily-box-num">'+(d.day===7?'🎁':'Day '+d.day)+'</div><div class="daily-box-reward">'+(isC?'+'+d.reward:(isV&&isToday?'🎟️':'?'))+'</div>'+(isC?'<div class="daily-check">✅</div>':'')+'</div>'}).join('')}
 function changeDailyPage(dir){dailyPage=Math.max(0,Math.min(Math.ceil(TOTAL_DAYS/DAYS_PER_PAGE)-1,dailyPage+dir));renderDaily()}
-async function claimDailyClick(day){if(user.dailyClaimedToday){toast('Claimed!',true);return;}if(day!==(user.dailyStreak||0)+1){toast('In order!',true);return;}const reward=config.dailyRewards[day-1]||0;if(day%7===0){const code='VC'+Math.random().toString(36).substr(2,8).toUpperCase();if(!config.vouchers)config.vouchers={};config.vouchers[code]={min:100,max:10000,used:false,ownerId:user.id};if(!user.voucherCards)user.voucherCards={};user.voucherCards[code]={min:100,max:10000,used:false};await db.collection('config').doc('app').update({vouchers:config.vouchers});await db.collection('users').doc(user.id).update({voucherCards:user.voucherCards});toast('🎟️ '+code);}user.dailyStreak=day;user.dailyClaimedToday=true;user.lastDailyClaim=new Date().toISOString();await addBal(reward);if(user.dailyStreak>=TOTAL_DAYS){user.dailyStreak=0;}await db.collection('users').doc(user.id).update({dailyStreak:user.dailyStreak,dailyClaimedToday:true,lastDailyClaim:user.lastDailyClaim,balance:user.balance,totalEarned:user.totalEarned});toast('✅ Day '+day+' claimed! +'+reward);updateUI();}
+async function claimDailyClick(day){if(user.dailyClaimedToday){toast('Already claimed today!',true);return;}if(day!==(user.dailyStreak||0)+1){toast('Claim in order!',true);return;}const reward=config.dailyRewards[day-1]||0;if(day%7===0){const code='VC'+Math.random().toString(36).substr(2,8).toUpperCase();if(!config.vouchers)config.vouchers={};config.vouchers[code]={min:100,max:10000,used:false,ownerId:user.id};if(!user.voucherCards)user.voucherCards={};user.voucherCards[code]={min:100,max:10000,used:false};await db.collection('config').doc('app').update({vouchers:config.vouchers});await db.collection('users').doc(user.id).update({voucherCards:user.voucherCards});toast('🎟️ Voucher: '+code);}user.dailyStreak=day;user.dailyClaimedToday=true;user.lastDailyClaim=new Date().toISOString();await addBal(reward);if(user.dailyStreak>=TOTAL_DAYS){user.dailyStreak=0;}await db.collection('users').doc(user.id).update({dailyStreak:user.dailyStreak,dailyClaimedToday:true,lastDailyClaim:user.lastDailyClaim,balance:user.balance,totalEarned:user.totalEarned});toast('✅ Day '+day+' claimed! +'+reward+' coins');updateUI();}
 async function redeemVoucher(){const code=document.getElementById('voucherCodeInput').value.trim().toUpperCase();if(!code){toast('Enter code!',true);return}const v=config.vouchers?.[code];if(!v){toast('Invalid!',true);return}if(v.used){toast('Used!',true);return}if(v.ownerId&&v.ownerId!==user.id){toast('Not yours!',true);return}if(user.vouchersRedeemed?.includes(code)){toast('Redeemed!',true);return}showAd('voucher',0,{code:code})}
 async function processVoucherRedeem(data){const code=data.code;const v=config.vouchers?.[code];if(!v)return;const reward=Math.floor(Math.random()*(v.max-v.min+1))+v.min;v.used=true;if(!user.vouchersRedeemed)user.vouchersRedeemed=[];user.vouchersRedeemed.push(code);if(user.voucherCards?.[code])user.voucherCards[code].used=true;await db.collection('config').doc('app').update({vouchers:config.vouchers});await addBal(reward);await db.collection('users').doc(user.id).update({vouchersRedeemed:user.vouchersRedeemed,voucherCards:user.voucherCards});toast('🎟️ +'+reward+'!');document.getElementById('voucherCodeInput').value='';updateUI()}
 function renderAllVouchers(){const c=document.getElementById('allVouchersList');if(!c)return;const entries=Object.entries(user.voucherCards||{});c.innerHTML=entries.length?entries.map(([code,v])=>'<div class="voucher-list-item"><span class="voucher-code-text">'+code+'</span><span style="font-size:10px;color:'+(v.used?'var(--success)':'var(--text2)')+';">'+(v.used?'Used':'Active')+'</span><button class="copy-btn" onclick="copyVoucherCode(\''+code+'\')">📋 Copy</button></div>').join(''):'<p style="color:var(--text2);">No vouchers.</p>'}
@@ -371,16 +327,10 @@ function copyRefLink(){const text=document.getElementById('refLinkDisplay')?.tex
 function showSettingsSubpage(p){document.getElementById('settingsMainPage').style.display='none';document.querySelectorAll('.settings-subpage').forEach(x=>x.classList.remove('active'));const el=document.getElementById(p+'Page');if(el)el.classList.add('active');if(p==='wallet'){renderWalletTokens();updateWithdrawUI();}if(p==='referral'){renderRefInSettings();}updateUI()}
 function hideSettingsSubpage(){document.querySelectorAll('.settings-subpage').forEach(x=>x.classList.remove('active'));document.getElementById('settingsMainPage').style.display='block';updateUI()}
 
-// 🔧 NEW: All Refer Page
+// ALL REFER PAGE
 function showAllReferPage(){document.querySelectorAll('.settings-subpage').forEach(x=>x.classList.remove('active'));document.getElementById('allReferPage').classList.add('active');loadAllReferUsers();}
 function hideAllReferPage(){document.querySelectorAll('.settings-subpage').forEach(x=>x.classList.remove('active'));document.getElementById('referralPage').classList.add('active');}
-async function loadAllReferUsers(){const c=document.getElementById('allReferList');c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">Loading...</p>';
-    try{const snap=await db.collection('users').where('referredBy','==',user.id).get();
-        if(snap.empty){c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">No referred users yet.</p>';return;}
-        const users=snap.docs.map(d=>({id:d.id,...d.data()}));
-        c.innerHTML=users.map(u=>{const avHtml=u.photoUrl?'<img src="'+u.photoUrl+'" alt="av">':(u.firstName||'?')[0];return'<div class="all-ref-item"><div class="all-ref-avatar">'+avHtml+'</div><div class="all-ref-info"><div class="all-ref-name">'+(u.firstName||'User')+'</div><div class="all-ref-id">ID: '+(u.tgId||u.id)+'</div></div><div class="all-ref-coins">+50 🪙</div></div>'}).join('');
-    }catch(e){c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">Error loading.</p>';}
-}
+async function loadAllReferUsers(){const c=document.getElementById('allReferList');c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">Loading...</p>';try{const snap=await db.collection('users').where('referredBy','==',user.id).get();if(snap.empty){c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">No referred users yet.</p>';return;}const users=snap.docs.map(d=>({id:d.id,...d.data()}));c.innerHTML=users.map(u=>{const avHtml=u.photoUrl?'<img src="'+u.photoUrl+'" alt="av">':(u.firstName||'?')[0];return'<div class="all-ref-item"><div class="all-ref-avatar">'+avHtml+'</div><div class="all-ref-info"><div class="all-ref-name">'+(u.firstName||'User')+'</div><div class="all-ref-id">ID: '+(u.tgId||u.id)+'</div></div><div class="all-ref-coins">+50 🪙</div></div>'}).join('');}catch(e){c.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;">Error loading.</p>';}}
 
 async function completeTask(id,reward,link,vReward){if(link)window.open(link,'_blank');if(!user.completedTasks)user.completedTasks=[];if(user.completedTasks.includes(id)){toast('Done!',true);return}user.completedTasks.push(id);if(reward>0)await addBal(reward);if(vReward){const code='TSK'+Math.random().toString(36).substr(2,8).toUpperCase();if(!config.vouchers)config.vouchers={};config.vouchers[code]={min:100,max:10000,used:false,ownerId:user.id};if(!user.voucherCards)user.voucherCards={};user.voucherCards[code]={min:100,max:10000,used:false};await db.collection('config').doc('app').update({vouchers:config.vouchers});await db.collection('users').doc(user.id).update({voucherCards:user.voucherCards});toast('🎟️ '+code)}await db.collection('users').doc(user.id).update({completedTasks:user.completedTasks});updateUI()}
 function startVisitTask(id,reward,link,vReward){if(!link){completeTask(id,reward,'',vReward);return}visitTaskData={id,reward,link,vReward};document.getElementById('visitWarn').classList.add('show');document.getElementById('btnVisitGo').onclick=function(){document.getElementById('visitWarn').classList.remove('show');window.open(link,'_blank');visitSec=0;visitInt=setInterval(()=>{visitSec++},1000);window.addEventListener('focus',checkVisitFocus)}}
@@ -388,63 +338,42 @@ function checkVisitFocus(){if(!visitTaskData)return;clearInterval(visitInt);wind
 function retryVisit(){document.getElementById('visitFail').classList.remove('show');if(visitTaskData){window.open(visitTaskData.link,'_blank');visitSec=0;visitInt=setInterval(()=>{visitSec++},1000);window.addEventListener('focus',checkVisitFocus)}}
 function exitVisit(){document.getElementById('visitFail').classList.remove('show');visitTaskData=null;clearInterval(visitInt);window.removeEventListener('focus',checkVisitFocus)}
 
-// 🔧 FIXED: Ad system - GigaPub direct load without loading screen
-function showAd(type,idx,extraData){adAction=type;if(type==='league'&&idx!==undefined)adAction='league_'+idx;adRefData=(type==='referral'&&extraData)?extraData:null;adCallbackData=extraData||null;document.getElementById('adWarn').classList.add('show');}
+// 🔧 FIXED: Simple single ad system (Monetag only)
+function showAd(type,idx,extraData){
+    adAction=type;
+    if(type==='league'&&idx!==undefined)adAction='league_'+idx;
+    adRefData=(type==='referral'&&extraData)?extraData:null;
+    adCallbackData=extraData||null;
+    document.getElementById('adWarn').classList.add('show');
+}
 function showAdRef(c,r){adRefData={count:c,reward:r};showAd('referral',0,{count:c,reward:r})}
 
-function startAdSequence(){
+function startAd(){
     document.getElementById('adWarn').classList.remove('show');
     document.getElementById('adFail').classList.remove('show');
     document.getElementById('adOverlay').classList.add('show');
-    adPhase=1;adPhase1Done=false;adPhase2Done=false;
-    updateAdPhaseUI();
-    loadMonetagAd();
-}
-
-function updateAdPhaseUI(){
-    document.getElementById('adPhaseNum').textContent=adPhase;
-    document.getElementById('adPhaseName').textContent=adPhase===1?'Monetag':'GigaPub';
-    document.getElementById('btnAdNext').style.display='none';
     document.getElementById('btnAdClose').style.display='none';
-}
-
-function loadMonetagAd(){
     document.getElementById('adUnit').innerHTML='';
     if(window.show_9955574){window.show_9955574();}
-    adPhaseTimeout=setTimeout(()=>{adPhase1Done=true;document.getElementById('btnAdNext').style.display='block';},5000);
+    adTimeout=setTimeout(()=>{document.getElementById('btnAdClose').style.display='block';},5000);
 }
 
-// 🔧 FIXED: GigaPub direct ad load - no loading text
-function nextAdPhase(){
-    clearTimeout(adPhaseTimeout);
-    adPhase=2;adPhase2Done=false;
-    updateAdPhaseUI();
-    document.getElementById('btnAdNext').style.display='none';
-    document.getElementById('adUnit').innerHTML='';
-    // Direct GigaPub ad call
-    if(window.GigaPub){if(typeof window.GigaPub.show==='function'){window.GigaPub.show();}else if(typeof window.GigaPub.init==='function'){window.GigaPub.init();}}
-    adPhaseTimeout=setTimeout(()=>{adPhase2Done=true;document.getElementById('btnAdClose').style.display='block';},6000);
-}
-
-function finishAdSequence(){
-    clearTimeout(adPhaseTimeout);
+function finishAd(){
+    clearTimeout(adTimeout);
     document.getElementById('adOverlay').classList.remove('show');
     document.getElementById('btnAdClose').style.display='none';
-    document.getElementById('btnAdNext').style.display='none';
-    if(adPhase1Done&&adPhase2Done){
-        user.totalAds=(user.totalAds||0)+1;user.todayAds=(user.todayAds||0)+1;
-        db.collection('users').doc(user.id).update({totalAds:user.totalAds,todayAds:user.todayAds});
-        if(typeof adAction==='string'&&adAction.startsWith('league_')){claimLeague(parseInt(adAction.split('_')[1]));}
-        else if(adAction==='referral'&&adRefData){claimRef(adRefData.count,adRefData.reward);adRefData=null;}
-        else if(adAction==='daily'&&adCallbackData){claimDailyClick(adCallbackData);}
-        else if(adAction==='voucher'&&adCallbackData){processVoucherRedeem(adCallbackData);}
-        else if(adAction==='withdraw'&&adCallbackData){submitWithdrawRequest(adCallbackData.tokenKey);}
-        else if(adAction==='transfer'){executeTransfer();}
-        adAction=null;adCallbackData=null;updateUI();
-    }else{document.getElementById('adFail').classList.add('show');}
+    user.totalAds=(user.totalAds||0)+1;user.todayAds=(user.todayAds||0)+1;
+    db.collection('users').doc(user.id).update({totalAds:user.totalAds,todayAds:user.todayAds});
+    if(typeof adAction==='string'&&adAction.startsWith('league_')){claimLeague(parseInt(adAction.split('_')[1]));}
+    else if(adAction==='referral'&&adRefData){claimRef(adRefData.count,adRefData.reward);adRefData=null;}
+    else if(adAction==='daily'&&adCallbackData){claimDailyClick(adCallbackData);}
+    else if(adAction==='voucher'&&adCallbackData){processVoucherRedeem(adCallbackData);}
+    else if(adAction==='withdraw'&&adCallbackData){submitWithdrawRequest(adCallbackData.tokenKey);}
+    else if(adAction==='transfer'){executeTransfer();}
+    adAction=null;adCallbackData=null;updateUI();
 }
-function retryAd(){document.getElementById('adFail').classList.remove('show');startAdSequence();}
-function exitAdPenalty(){document.getElementById('adFail').classList.remove('show');adAction=null;adRefData=null;adCallbackData=null;clearTimeout(adPhaseTimeout);updateUI();}
+function retryAd(){document.getElementById('adFail').classList.remove('show');startAd();}
+function exitAdPenalty(){document.getElementById('adFail').classList.remove('show');adAction=null;adRefData=null;adCallbackData=null;clearTimeout(adTimeout);updateUI();}
 function createSparkles(){const bg=document.getElementById('earnBg');if(!bg)return;const colors=['#fbbf24','#f59e0b','#fcd34d','#e94560','#a78bfa','#60a5fa'];for(let i=0;i<60;i++){const s=document.createElement('div');s.className='earn-sparkle';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--sdur',(Math.random()*3+2)+'s');s.style.setProperty('--sdel',(Math.random()*4)+'s');const sz=Math.random()*3+2;s.style.width=sz+'px';s.style.height=sz+'px';s.style.background=colors[Math.floor(Math.random()*colors.length)];bg.appendChild(s)}}
 
 // LEADERBOARD
